@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const port = 7000;
 const bodyParser = require('body-parser');
-var productRoute = require('./Routers/ProductRoutes');
-var userRoute = require('./Routers/UserRoutes');
+var productRoute = require('./controllers/product-controller');
+var userRoute = require('./controllers/user-controller');
 
 //đọc thông tin trong body
 app.use(bodyParser.urlencoded({ extended: false }))
