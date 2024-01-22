@@ -1,5 +1,3 @@
-
-;
 const app = require('./src/app');
 const port = 7000;
 
