@@ -8,7 +8,7 @@
     "start": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "NDK",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
