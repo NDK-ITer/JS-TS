@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
-const authRouter = require('./routes/authRoute');
-const userRoute = require('./routes/user.Route');
 const songRoute = require('./routes/songRoute');
 
 //connect db
@@ -18,7 +16,7 @@ const options = {
   };
 mongoose.connect(connectString, options)
         .then(() => console.log('Db connecting is successful'))
-        .catch(err => console.error('Error:', err));;
+        .catch(err => console.error('Error:', err));
 
 //add 'body-parser'
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,8 +26,6 @@ app.use(cors());
 app.use(morgan('common'));
 
 //add router
-app.use("/v1/auth", authRouter);
-app.use("/v1/user", userRoute);
 app.use("/v1/song", songRoute);
 //
 
