@@ -1,5 +1,5 @@
 export class AddSongModel{
-    public Name: string;
-    public UserId: string;
-    public genres: [string];
+    public Name: string | undefined;
+    public UserId: string | undefined;
+    public genres: [string] | undefined;
 }

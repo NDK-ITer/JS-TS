@@ -1,4 +1,4 @@
-
+const UOWService = require("../repository/application/service/UOWService");
 const songController = {
     add: async(req, res) =>{
         try{
@@ -6,6 +6,7 @@ const songController = {
             //     const user = User.findById(req.body.user);
             //     await user.updateOne({ $push : { songs: saveSong._id}});
             // }
+            await UOWService.songController
             res.status(200).json(saveSong);
         } catch (err) {
             res.status(500).json(err);

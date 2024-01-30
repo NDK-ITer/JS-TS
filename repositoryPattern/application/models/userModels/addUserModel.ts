@@ -1,6 +1,6 @@
 export class AddUserModel{
-    public FirstName: String;
-    public LastName: String;
-    public Born: Number;
-    public Songs: [String];
+    public FirstName: String | undefined;
+    public LastName: String | undefined;
+    public Born: Number | undefined;
+    public Songs: [String] | undefined;
 }
