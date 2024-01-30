@@ -1,15 +1,7 @@
-import { AddSongModel } from "../repositoryPattern/application/models/songModels/addSongModel";
-const { UOWService } = require("../repositoryPattern/application/service/uowService");
 
-let uow = new UOWService();
 const songController = {
     add: async(req, res) =>{
         try{
-            let addSong = new AddSongModel({
-                Name: req.body.name,
-                UserId: req.body.user,
-            });
-            uow.SongService.Add(addSong);
             // if(req.body.user){
             //     const user = User.findById(req.body.user);
             //     await user.updateOne({ $push : { songs: saveSong._id}});
