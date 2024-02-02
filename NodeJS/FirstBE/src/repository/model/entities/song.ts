@@ -5,14 +5,20 @@ export interface ISong extends Document {
     name: string;
     publishedDate: string;
     genres: [string];
-    user: IUser['_id'];
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 }
 
 const songSchema = new mongoose.Schema<ISong>({
     name: String,
     publishedDate: String,
     genres: [String],
-    user: String
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 export const SongModel =  mongoose.model<ISong>("Song", songSchema)

@@ -1,25 +1,31 @@
 import UOWService from '../repository/application/service/UOWService';
 import { Response } from 'express';
 
-class AuthController {
+class SongController {
     static async Create(req: any, res: Response): Promise<void>{
-        const song = UOWService.SongService.Create({
+        const addSong = await UOWService.SongService.Create({
             Name: req.body.name,
-            UserId: undefined,
-            genres: undefined
+            UserId: req.body.user,
+            genres: req.body.genres
         });
-        res.json({
-            mess: "Adding song is successful",
-            song: song
-        });
+        res.json(addSong);
     };
 
     static async GetAll(req: any, res: Response): Promise<void>{
-        console.log(UOWService.SongService.GetAll());
+        const allSong = await UOWService.SongService.GetAll();
         res.json({
-            songs: await UOWService.SongService.GetAll()
+            Count: allSong.length,
+            ListSong: allSong
         });
-    }
+    };
+
+    static async GetById(req: any, res: Response): Promise<any>{
+        res.json(await UOWService.SongService.GetById(req.params.id));
+    };
+
+    static async Delete(req: any, res: Response): Promise<any>{
+        res.json(await UOWService.SongService.Delete(req.params.id))
+    };
 }
 
-export default AuthController;
+export default SongController;
