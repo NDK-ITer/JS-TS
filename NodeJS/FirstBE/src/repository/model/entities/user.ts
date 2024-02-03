@@ -1,5 +1,4 @@
 import mongoose, {Document, Types} from"mongoose";
-import { ISong } from "./song";
 
 export interface IUser extends Document {
     firstName: {
@@ -11,8 +10,19 @@ export interface IUser extends Document {
         required:true
     }
     born: {
-        type: Number,
+        type: Date,
         required:true
+    }
+    email: {
+        type: string,
+        required:true
+    }
+    passwordHash:{
+        type: string,
+        required:true
+    },
+    tokenAccess:{
+        type: string,
     }
     songs: {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,7 +33,9 @@ export interface IUser extends Document {
 const userSchema = new mongoose.Schema<IUser>({
     firstName: String,
     lastName: String,
-    born: Number,
+    born: Date,
+    email: String,
+    passwordHash: String,
     songs: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Song'

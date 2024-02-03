@@ -1,4 +1,5 @@
 import { connectDB } from "./repository/dataAccess/access";
+import authRoute from "./routes/authRoute";
 import songRoute from "./routes/songRoute";
 
 const express = require('express');
@@ -14,6 +15,7 @@ async function start() {
 
         // Routes
         app.use('/v1/song', songRoute);
+        app.use('/v1/auth', authRoute);
         app.get('/',(req:any, res:any)=>{res.json("hello")});
     
         // Start server

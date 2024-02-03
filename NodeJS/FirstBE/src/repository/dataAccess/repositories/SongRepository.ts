@@ -9,4 +9,8 @@ export class SongRepository extends GenericRepository<ISong>{
     public override async GetById(id: string): Promise<ISong | null> {
         return this.model.findById(id).populate('user').exec();
     }
+
+    public GetAll(): Promise<ISong[]> {
+        return this.model.find().populate('user').exec()
+    }
 }

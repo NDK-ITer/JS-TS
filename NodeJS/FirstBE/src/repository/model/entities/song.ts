@@ -1,5 +1,4 @@
 import mongoose, {Document} from"mongoose";
-import { IUser } from "./user";
 
 export interface ISong extends Document {
     name: string;

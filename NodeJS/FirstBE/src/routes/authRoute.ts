@@ -1,6 +1,8 @@
-const authRoute = require('express').Route();
+import AuthController from "../controllers/authController";
 
-authRoute.get();
+const authRoute = require('express').Router();
+
+authRoute.post('/register', AuthController.Register);
 
 export default authRoute;
 // authRoute.get();

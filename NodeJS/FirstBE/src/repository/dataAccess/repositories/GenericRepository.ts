@@ -25,8 +25,10 @@ class GenericRepository<T extends Document> implements IGenericRepository<T>{
     public async GetAll(): Promise<T[]> {
         return this.model.find().exec();
     }
-    public async find(predicate: (item: T) => boolean): Promise<T[]> {
-        throw new Error("Method not implemented.");
+    public async Find(predicate: (item: T) => boolean): Promise<T[]> {
+        const allItems = await this.model.find().exec();
+        const filteredItems = allItems.filter(predicate);
+        return filteredItems;
     }
 
 }
