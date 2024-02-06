@@ -2,12 +2,12 @@ import * as jwt from 'jsonwebtoken';
 
 
 export class Authenticate{
-    static async GenerateJWT(data: any, secretKey: string): Promise<any>{
+    static async GenerateJWT(data: any, secretKey: string, expiresIn: string): Promise<any>{
         const payload = {
             id: data.id,
             role: data.role
         }
-        const token = jwt.sign(payload, secretKey);
+        const token = jwt.sign(payload, secretKey, { expiresIn });
         return token;
     }
 

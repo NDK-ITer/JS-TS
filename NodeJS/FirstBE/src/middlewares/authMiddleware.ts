@@ -11,7 +11,7 @@ export class AuthMiddleware{
         if (!token) {
             return res.status(401).json({ message: 'Unauthorized - No token provided' });
         }
-        const decodedUser = Authenticate.VerifyAndDecodeJWT(token, secretKey);
+        const decodedUser = await Authenticate.VerifyAndDecodeJWT(token, secretKey);
         if (!decodedUser) {
             return res.status(403).json({ message: 'Forbidden - Invalid token' });
         }
@@ -20,7 +20,7 @@ export class AuthMiddleware{
     }
 
     static async IsUser(req: any, res: Response, next: NextFunction){
-        const user = await req.user
+        const user = req.user
         if (user.role != 'USER') {
             return res.status(403).json({ message: 'Forbidden - Invalid token' });
         }
@@ -28,7 +28,7 @@ export class AuthMiddleware{
     }
 
     static async IsAdmin(req: any, res: Response, next: NextFunction){
-        const user = await req.user
+        const user = req.user
         if (user.role != 'ADMIN') {
             return res.status(403).json({ message: 'Forbidden - Invalid token' });
         }

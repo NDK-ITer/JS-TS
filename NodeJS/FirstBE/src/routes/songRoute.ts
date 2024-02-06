@@ -1,13 +1,16 @@
 import SongController from "../controllers/songController";
+import { AuthMiddleware } from "../middlewares/authMiddleware";
 
 const songRoute = require('express').Router();
 
-songRoute.post('/add', SongController.Create);
-songRoute.get('/all', SongController.GetAll);
-songRoute.put('/update', SongController.Update);
+songRoute.get('/all', AuthMiddleware.AuthenticateJWT, AuthMiddleware.IsAdmin, SongController.GetAll);
 songRoute.get('/:id', SongController.GetById);
-songRoute.delete('/del/:id', SongController.Delete);
-songRoute.get('/user/:id', SongController.GetByUserId);
+songRoute.get('/user/:id', AuthMiddleware.AuthenticateJWT, SongController.GetByUserId);
+
+songRoute.post('/add', AuthMiddleware.AuthenticateJWT, SongController.Create);
+songRoute.put('/update', AuthMiddleware.AuthenticateJWT, SongController.Update);
+songRoute.delete('/del/:id', AuthMiddleware.AuthenticateJWT, SongController.Delete);
+
 
 export default songRoute;
 

@@ -6,14 +6,14 @@ export class SongService{
         this.UOWRep = new UOWRep();
     }
 
-    public async Create(data: any): Promise<any>{
+    public async Create(user: string, data: any): Promise<any>{
         try {
             const newSong: any = {
                 name: data.name,
                 publishedDate: new Date().toLocaleDateString(),
             }
             const song = await this.UOWRep.SongRepository.Add(newSong);
-            if(data.user! && await this.UOWRep.UserRepository.GetById(data.user)){
+            if(user! && await this.UOWRep.UserRepository.GetById(user)){
                 const updateUser: any = {
                     $push: {
                         songs: [
@@ -21,10 +21,10 @@ export class SongService{
                         ]
                     }
                 }
-                await this.UOWRep.UserRepository.Update(data.user, updateUser);
+                await this.UOWRep.UserRepository.Update(user, updateUser);
                 const updateSong: any = {
                     $set: {
-                        user: data.user
+                        user: user
                     }
                 }
                 await this.UOWRep.SongRepository.Update(song?._id, updateSong);
@@ -45,7 +45,7 @@ export class SongService{
             }
             return {
                 state: 0,
-                mess: 'user with id: '+data.user+' not found',
+                mess: 'user with id: '+user+' not found',
             };
         } catch (error) {
             return {
@@ -108,8 +108,15 @@ export class SongService{
         };
     }
 
-    public async Delete(id: string): Promise<any>{
+    public async Delete(user: string, id: string): Promise<any>{
         try {
+            const song = await this.GetById(id);
+            if (song.user !== user) {
+                return{
+                    state: 0,
+                    mess: 'you cant delete'
+                }
+            }
             const dele = await this.UOWRep.SongRepository.Delete(id);
             if(!dele){
                 return{
@@ -129,8 +136,15 @@ export class SongService{
         }
     }
 
-    public async Update(data: any): Promise<any>{
+    public async Update(user: string, data: any): Promise<any>{
         try {
+            const song = await this.GetById(data.id);
+            if (song.user !== user) {
+                return{
+                    state: 0,
+                    mess: 'you cant update'
+                }
+            }
             const songUpdate: any = await this.UOWRep.SongRepository.Update(data.id, data);
             if (!songUpdate) {
                 return{

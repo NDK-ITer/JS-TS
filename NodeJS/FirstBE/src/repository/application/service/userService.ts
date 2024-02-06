@@ -99,12 +99,11 @@ export class UserService{
                 const jwt = await Authenticate.GenerateJWT({
                     id: user._id,
                     role: user.role
-                }, this.secretKey);
+                }, this.secretKey, '7d');
                 return{
                     state: 1,
                     jwt: jwt,
                     data:{
-                        id: user._id,
                         userName: user.firstName + ' ' + user.lastName,
                         role: user.role
                     }

@@ -10,6 +10,7 @@ class AuthController{
         res.json(await UOWService.UserService.GetJWT(req.body))
     }
     
+    
 }
 
 export default AuthController;

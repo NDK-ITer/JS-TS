@@ -21,6 +21,7 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1",
     "nodemon": "^3.0.3",
+    "path": "^0.12.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
