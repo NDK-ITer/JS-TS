@@ -1,4 +1,4 @@
-import mongoose, {Document, Types} from"mongoose";
+import mongoose, {Document} from"mongoose";
 
 export interface IUser extends Document {
     firstName: {
@@ -23,11 +23,17 @@ export interface IUser extends Document {
     },
     tokenAccess:{
         type: string,
+    },
+    role: {
+        type: string,
+        required:true
     }
-    songs: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Song'
-    };
+    songs: [
+            {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Song'
+        }
+    ];
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -36,10 +42,13 @@ const userSchema = new mongoose.Schema<IUser>({
     born: Date,
     email: String,
     passwordHash: String,
-    songs: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Song'
-    }
+    role: String,
+    songs: [
+            {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Song'
+        }
+    ]
 })
 
 export const UserModel = mongoose.model<IUser>('User', userSchema);

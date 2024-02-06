@@ -9,11 +9,11 @@ export class SongService{
     public async Create(data: any): Promise<any>{
         try {
             const newSong: any = {
-                name: data.Name,
+                name: data.name,
                 publishedDate: new Date().toLocaleDateString(),
             }
             const song = await this.UOWRep.SongRepository.Add(newSong);
-            if(data.UserId!){
+            if(data.user! && await this.UOWRep.UserRepository.GetById(data.user)){
                 const updateUser: any = {
                     $push: {
                         songs: [
@@ -21,27 +21,31 @@ export class SongService{
                         ]
                     }
                 }
-                await this.UOWRep.UserRepository.Update(data.UserId, updateUser);
+                await this.UOWRep.UserRepository.Update(data.user, updateUser);
                 const updateSong: any = {
                     $set: {
-                        user: data.UserId
+                        user: data.user
                     }
                 }
                 await this.UOWRep.SongRepository.Update(song?._id, updateSong);
-            }
-            const songModel: any = await this.UOWRep.SongRepository.GetById(song?._id)
-            return {
-                state: 1,
-                mess: 'successful',
-                data: {
-                    id: songModel.id,
-                    publishedDate: song?.publishedDate,
-                    name: songModel.name,
-                    user: {
-                        id: songModel.user._id,
-                        name: songModel.user.firstName+' ' + songModel.user.lastName
+                const songModel: any = await this.UOWRep.SongRepository.GetById(song?._id)
+                return {
+                    state: 1,
+                    mess: 'successful',
+                    data: {
+                        id: songModel._id,
+                        publishedDate: song?.publishedDate,
+                        name: songModel.name,
+                        user: {
+                            id: songModel.user._id,
+                            name: songModel.user.firstName+' ' + songModel.user.lastName
+                        }
                     }
-                }
+                };
+            }
+            return {
+                state: 0,
+                mess: 'user with id: '+data.user+' not found',
             };
         } catch (error) {
             return {
@@ -84,6 +88,7 @@ export class SongService{
 
     public async GetAll(){
         const songs = this.UOWRep.SongRepository.GetAll();
+        console.log(typeof(songs))
         let songModel: any[] = [];
         (await songs).forEach((e: any)=> {
             songModel.push({
@@ -170,4 +175,5 @@ export class SongService{
             };
         }
     }
+
 }

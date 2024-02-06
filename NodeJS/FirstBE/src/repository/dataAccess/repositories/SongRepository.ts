@@ -11,6 +11,6 @@ export class SongRepository extends GenericRepository<ISong>{
     }
 
     public GetAll(): Promise<ISong[]> {
-        return this.model.find().populate('user').exec()
+        return this.model.find().populate('user').exec();
     }
 }
