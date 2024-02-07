@@ -8,12 +8,25 @@ export class SongService{
 
     public async Create(user: string, data: any): Promise<any>{
         try {
+            if (!data.fileName) {
+                return{
+                    state: 0,
+                    mess: `sound not empty`
+                }
+            }
             const newSong: any = {
                 name: data.name,
+                fileName: data.fileName,
                 publishedDate: new Date().toLocaleDateString(),
             }
             const song = await this.UOWRep.SongRepository.Add(newSong);
-            if(user! && await this.UOWRep.UserRepository.GetById(user)){
+            if (!user) {
+                return{
+                    state: 0,
+                    mess: `user cannot be null`
+                }
+            }
+            if(await this.UOWRep.UserRepository.GetById(user)){
                 const updateUser: any = {
                     $push: {
                         songs: [
@@ -36,6 +49,7 @@ export class SongService{
                         id: songModel._id,
                         publishedDate: song?.publishedDate,
                         name: songModel.name,
+                        fileName: song?.fileName,
                         user: {
                             id: songModel.user._id,
                             name: songModel.user.firstName+' ' + songModel.user.lastName
@@ -50,7 +64,7 @@ export class SongService{
         } catch (error) {
             return {
                 state: -1,
-                mess: 'Error: '+error
+                mess: error
             };
         }
         
@@ -69,19 +83,18 @@ export class SongService{
                 state: 1,
                 data: {
                     id: song.id,
-                    publishedDate: song?.publishedDate,
+                    publishedDate: song.publishedDate,
                     name: song?.name,
                     user: {
                         id: song?.user._id,
                         name: song.user.firstName+' ' + song.user.lastName
                     }
-                },
-                mess: 'have found'
+                }
             }
         } catch (error) {
             return {
                 state: -1,
-                mess: 'Error: '+error
+                mess: error
             };
         }
     }
@@ -110,8 +123,15 @@ export class SongService{
 
     public async Delete(user: string, id: string): Promise<any>{
         try {
-            const song = await this.GetById(id);
-            if (song.user !== user) {
+            const song:any = await this.UOWRep.SongRepository.GetById(id);
+            const fileName = song.fileName
+            if (!song) {
+                return {
+                    state: 0,
+                    mess: `not found with ${id}`
+                }
+            }
+            if (song.user.id != user) {
                 return{
                     state: 0,
                     mess: 'you cant delete'
@@ -119,19 +139,29 @@ export class SongService{
             }
             const dele = await this.UOWRep.SongRepository.Delete(id);
             if(!dele){
+                
                 return{
                     state: 0,
                     mess: 'fail'
                 }
             }
+            const dataUpdate: any = {
+                $pull: {
+                    songs: [
+                        song.id
+                    ]
+                }
+            }
+            await this.UOWRep.UserRepository.Update(user, dataUpdate)
             return{
                 state: 1,
+                fileName: fileName,
                 mess: 'successful'
             }
         } catch (error) {
             return{
                 state: -1,
-                mess: "Error: " + error
+                mess: await error
             }
         }
     }
@@ -162,7 +192,7 @@ export class SongService{
         } catch (error) {
             return{
                 state: -1,
-                mess: "Error: " + error
+                mess: error
             }
         }
     }
@@ -185,7 +215,7 @@ export class SongService{
         } catch (error) {
             return {
                 state: -1,
-                mess: 'Error: '+error
+                mess: error
             };
         }
     }

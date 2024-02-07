@@ -27,6 +27,13 @@ export interface IUser extends Document {
     role: {
         type: string,
         required:true
+    },
+    specialName:{
+        type: string
+        required: true
+    },
+    avatar:{
+        type: string
     }
     songs: [
             {
@@ -42,7 +49,9 @@ const userSchema = new mongoose.Schema<IUser>({
     born: Date,
     email: String,
     passwordHash: String,
+    specialName: String,
     role: String,
+    avatar: String,
     songs: [
             {
             type: mongoose.Schema.Types.ObjectId,

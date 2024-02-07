@@ -15,13 +15,22 @@ export class UserService{
     public async Create(data: any): Promise<any>{
         try {
             let state: number = 0;
+            const userAvailable = await this.UOWRep.UserRepository.Find(u => u.email == data.email);
+            if (userAvailable.length != 0) {
+                return{
+                    state: state,
+                    mess: `email ${data.email} has existed`
+                }
+            }
             const passwordHash = await PasswordMethods.HashingPassword(data.password);
             const newUser: any = {
-                firstName: data.firstName,
-                lastName: data.lastName,
+                firstName: data.firstName.trim(),
+                lastName: data.lastName.trim(),
+                avatar: data.avatarName,
                 email: data.email,
+                specialName: data.specialName,
                 passwordHash: passwordHash,
-                born: data.born,
+                born: data.born.toLocaleDateString(),
                 role:'USER'
             }
             const user:any = await this.UOWRep.UserRepository.Add(newUser);
@@ -36,14 +45,16 @@ export class UserService{
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
-                    born: user.born,
+                    avatar: user.avatar,
+                    specialName: user.specialName,
+                    born: user.born.toLocaleDateString(),
                     passwordHash: user.passwordHash
                 }
             }
         } catch (error) {
             return {
                 state: -1,
-                mess: 'Error: '+ error
+                mess: error
             };
         }
     }
@@ -57,7 +68,7 @@ export class UserService{
             }
             state = 1;
             let songModel: any[] = [];
-            if (user.songs) {
+            if (user.songs != null) {
                 (await user.songs).forEach((e: any)=> {
                     songModel.push({
                         id: e._id,
@@ -70,9 +81,10 @@ export class UserService{
             return{
                 state: state,
                 data:{
-                    id: user?._id,
+                    id: user._id,
                     FirstName: user.firstName,
                     LastName: user.lastName,
+                    avatar: user.avatar,
                     role: user.role,
                     listSong: songModel
                 }
@@ -80,15 +92,15 @@ export class UserService{
         } catch (error) {
             return {
                 state: -1,
-                mess: 'Error: '+ error
+                mess: error
             };
         }
     }
 
     public async GetJWT(data: any): Promise<any>{
         try {
-            const found = await this.UOWRep.UserRepository.Find(u => u.email === data.email);
-            if (!found) {
+            const found = await this.UOWRep.UserRepository.Find(u => u.email == data.email);
+            if (!found || found.length == 0) {
                 return{
                     state: 0,
                     mess: 'not found user with email: ' + data.email
@@ -105,6 +117,8 @@ export class UserService{
                     jwt: jwt,
                     data:{
                         userName: user.firstName + ' ' + user.lastName,
+                        specialName: user.specialName,
+                        avatar: user.avatar,
                         role: user.role
                     }
                 }
@@ -116,31 +130,75 @@ export class UserService{
         } catch (error) {
             return {
                 state: -1,
-                mess: 'Error: '+ error
+                mess: error
             };
         }
         
     }
 
-    public async Edit(data: any): Promise<any>{
+    public async Edit(userId: string, data: any): Promise<any>{
         try {
-            let userEdit: any = {
-                firstName: data.firstName,
-                lastName: data.lastName
+            if (!userId) {
+                return{
+                    state: 0,
+                    mess: `userID is null`
+                }
+            } else if(!data) {
+                return{
+                    state: 0,
+                    mess: `data is null`
+                }
             }
-            const user:any = await this.UOWRep.UserRepository.Update(data.id, userEdit);
+            let userEdit: any = {
+                firstName: data.firstName.trim(),
+                lastName: data.lastName.trim(),
+                specialName: data.specialName,
+                avatar: data.avatarName
+            }
+            const user:any = await this.UOWRep.UserRepository.Update(userId, userEdit);
+            if (!user) {
+                return{
+                    state: 0,
+                    mess: `user with id ${userId} is not exist`
+                }
+            }
             return{
                 state: 1,
                 data: {
                     id: user._id,
                     firstName: user.firstName,
                     lastName: user.lastName,
+                    specialName: user.specialName
                 }
             }
         } catch (error) {
             return {
                 state: -1,
-                mess: 'Error: ' + error
+                mess: error
+            };
+        }
+    }
+
+    public async GetAll(): Promise<any>{
+        try {
+            const allUser = this.UOWRep.UserRepository.GetAll();
+            let userModel: any[] = [];
+            (await allUser).forEach((e: any) =>{
+                userModel.push({
+                    id: e._id,
+                    userName: `${e.firstName} ${e.lastName}`,
+                    specialName: e.specialName,
+                    songs: e.songs
+                });
+            });
+            return{
+                state: 1,
+                data: userModel
+            }
+        } catch (error) {
+            return {
+                state: -1,
+                mess: error
             };
         }
     }
