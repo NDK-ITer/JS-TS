@@ -1,12 +1,15 @@
 import './styles/App.scss';
-import Header from './components/Header'
-import TableUser from './components/TableUser'
+import Header from './components/Header';
+import TableSong from './components/TableSong';
+import Container from 'react-bootstrap/Container';
 
 function App() {
   return (
     <div className='app-container'>
       <Header/>
-      <TableUser/>
+      <Container>
+        <TableSong/>
+      </Container>
     </div>
   );
 }

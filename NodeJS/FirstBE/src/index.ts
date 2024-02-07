@@ -3,6 +3,7 @@ import { publicPath } from "./constants";
 import authRoute from "./routes/authRoute";
 import songRoute from "./routes/songRoute";
 import userRoute from "./routes/userRoute";
+import cors from 'cors';
 
 const express = require('express');
 const body = require('body-parser');
@@ -20,6 +21,7 @@ async function start() {
             origin: 'http://localhost:3000', 
             optionsSuccessStatus: 200 
         }
+        
         app.use(cors(corsOptions));
         // Routes
         app.use('/v1/song', songRoute);
@@ -37,10 +39,3 @@ async function start() {
 }
 
 start();
-
-function cors(corsOptions: {
-    origin: string; // Chỉ cho phép truy cập từ domain này
-    optionsSuccessStatus: number; // Some legacy browsers (IE11, various SmartTVs) choke on 204
-}): any {
-    throw new Error("Function not implemented.");
-}

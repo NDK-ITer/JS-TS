@@ -34,6 +34,11 @@ class SongController {
 
     static async GetByUserId(req: any, res: Response):Promise<any>{
         const result = await UOWService.SongService.GetByUserId(req.params.id)
+        if (result.state == 1) {
+            result.data.forEach((e:any) => {
+                e.fileName = `${req.protocol}://${req.get('host')}/${e.fileName}`
+            });
+        }
         res.json(result);
     }
 }

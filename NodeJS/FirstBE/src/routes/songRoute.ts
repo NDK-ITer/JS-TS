@@ -39,7 +39,7 @@ const uploadUPdate = multer({ storage: storageUpdate });
 
 songRoute.get('/all', AuthMiddleware.AuthenticateJWT, AuthMiddleware.IsAdmin, SongController.GetAll);
 songRoute.get('/:id', SongController.GetById);
-songRoute.get('/user/:id', AuthMiddleware.AuthenticateJWT, SongController.GetByUserId);
+songRoute.get('/user/:id', SongController.GetByUserId);
 
 songRoute.post('/add', AuthMiddleware.AuthenticateJWT, upload.single('file'), SongController.Create);
 

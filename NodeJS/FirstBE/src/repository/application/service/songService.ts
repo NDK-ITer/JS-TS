@@ -199,12 +199,13 @@ export class SongService{
 
     public async GetByUserId(userId: string): Promise<any>{
         try {
-            const songWithUser = await this.UOWRep.SongRepository.Find((song) => String(song.user) === userId);
+            const songWithUser = await this.UOWRep.SongRepository.Find((song) => String(song.user) == userId);
             let songModel: any[] = [];
-            (await songWithUser).forEach((e: any)=> {
+            songWithUser.forEach((e: any)=> {
                 songModel.push({
                     id: e._id,
                     name: e.name,
+                    fileName: e.fileName,
                     publishedDate: e.publishedDate
                 });
             });
