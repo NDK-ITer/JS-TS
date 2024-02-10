@@ -9,11 +9,17 @@ export class AuthMiddleware{
     static async AuthenticateJWT(req: any, res: Response, next: NextFunction){
         const token = String((req.headers as any).authorization).split(' ')[1];
         if (!token) {
-            return res.status(401).json({ message: 'Unauthorized - No token provided' });
+            return res.json({ 
+                state: 0,
+                mess: 'Unauthorized - No token provided' 
+            });
         }
         const decodedUser = await Authenticate.VerifyAndDecodeJWT(token, secretKey);
         if (!decodedUser) {
-            return res.status(403).json({ message: 'Forbidden - Invalid token' });
+            return res.json({ 
+                state: 0,
+                mess: 'Forbidden - Invalid token' 
+            });
         }
         req.user = decodedUser
         next();
@@ -22,7 +28,10 @@ export class AuthMiddleware{
     static async IsUser(req: any, res: Response, next: NextFunction){
         const user = req.user
         if (user.role != 'USER') {
-            return res.status(403).json({ message: 'Forbidden - Invalid token' });
+            return res.json({ 
+                state: 0,
+                mess: 'Forbidden - Invalid token' 
+            });
         }
         next()
     }
@@ -30,7 +39,10 @@ export class AuthMiddleware{
     static async IsAdmin(req: any, res: Response, next: NextFunction){
         const user = req.user
         if (user.role != 'ADMIN') {
-            return res.status(403).json({ message: 'Forbidden - Invalid token' });
+            return res.json({ 
+                state: 1,
+                mess: 'Forbidden - Invalid token' 
+            });
         }
         next()
     }

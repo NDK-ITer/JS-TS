@@ -14,12 +14,13 @@ class AuthController{
     }
 
     static async Login(req: any, res: Response):Promise<any>{
-        const userJWT = await UOWService.UserService.GetJWT(req.body)
-        if (userJWT.state == 1) {
-            userJWT.data.linkAvatar = `${req.protocol}://${req.get('host')}/${userJWT.data.avatar}`
+        const result = await UOWService.UserService.GetJWT(req.body)
+        if (result.state == 1) {
+            result.data.linkAvatar = `${req.protocol}://${req.get('host')}/${result.data.avatar}`
         }
-        res.json(userJWT)
+        res.json(result)
     }
+
 }
 
 export default AuthController;

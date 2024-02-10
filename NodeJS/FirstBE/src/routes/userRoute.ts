@@ -24,6 +24,7 @@ const upload = multer({ storage: storage });
 
 userRoute.put('/edit', AuthMiddleware.AuthenticateJWT, upload.single('avatar'), UserController.Edit);
 userRoute.get('/all', AuthMiddleware.AuthenticateJWT, AuthMiddleware.IsAdmin, UserController.GetAll);
+userRoute.get('/me', AuthMiddleware.AuthenticateJWT, UserController.GetMyInformation);
 userRoute.get('/:id', UserController.GetById);
 
 

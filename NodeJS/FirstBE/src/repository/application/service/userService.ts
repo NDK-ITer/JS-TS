@@ -202,4 +202,42 @@ export class UserService{
             };
         }
     }
+
+    public async GetInformation(id : string): Promise<any>{
+        try {
+            let state: number = 0;
+            const user:any = await this.UOWRep.UserRepository.GetById(id);
+            if (!user) {
+                state = 0;
+            }
+            state = 1;
+            let songModel: any[] = [];
+            if (user.songs != null) {
+                (await user.songs).forEach((e: any)=> {
+                    songModel.push({
+                        id: e._id,
+                        publishedDate: e.publishedDate,
+                        name: e.name,
+                    });
+                });
+            }
+            
+            return{
+                state: state,
+                data:{
+                    id: user._id,
+                    FirstName: user.firstName,
+                    LastName: user.lastName,
+                    avatar: user.avatar,
+                    role: user.role,
+                    listSong: songModel
+                }
+            }
+        } catch (error) {
+            return {
+                state: -1,
+                mess: error
+            };
+        }
+    }
 }

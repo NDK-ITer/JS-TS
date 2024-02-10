@@ -101,12 +101,12 @@ export class SongService{
 
     public async GetAll(){
         const songs = this.UOWRep.SongRepository.GetAll();
-        console.log(typeof(songs))
         let songModel: any[] = [];
         (await songs).forEach((e: any)=> {
             songModel.push({
                 id: e._id,
                 publishedDate: e.publishedDate,
+                fileName: e.fileName,
                 name: e.name,
                 user: {
                     id: e.user._id,

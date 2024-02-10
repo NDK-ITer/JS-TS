@@ -1,11 +1,33 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
-const BASE_URL = 'https://localhost:7000/'
 const instance = axios.create({
-    baseURL: BASE_URL,
-    // timeout: 1000,
-    headers: { 'Content-Type': 'application/json' },
-    withCredentials: true
+    baseURL: `http://localhost:7000/`,
+    timeout: 1000*60*5,
+    withCredentials: false
 });
 
-export default instance
+instance.interceptors.request.use(function (config) {
+    const jwt  = Cookies.get('jwt');
+    if (jwt) {
+        config.headers[`Authorization`] = `Bearer ${jwt}`
+    }
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
+
+instance.interceptors.response.use(function (res) {
+    let result = res.data
+    if(result.state !== 1){
+        console.log(result.mess)
+    }
+    return result;
+}, function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    return Promise.reject(error);
+});
+
+export default instance;

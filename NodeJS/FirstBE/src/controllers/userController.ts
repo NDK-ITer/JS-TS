@@ -14,6 +14,13 @@ class UserController{
     static async GetAll(req: any, res: Response){
         res.json(await UOWService.UserService.GetAll())
     }
+
+    static async GetMyInformation(req: any, res: Response): Promise<any>{
+        const result = await UOWService.UserService.GetInformation(req.user.id);
+        if (result.state == 1) {
+            result.data.linkAvatar = `${req.protocol}://${req.get('host')}/${result.data.avatar}`
+        }
+    }
 }
 
 export default UserController;

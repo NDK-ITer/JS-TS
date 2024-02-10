@@ -11,6 +11,11 @@ class SongController {
 
     static async GetAll(req: any, res: Response): Promise<any>{
         const result = await UOWService.SongService.GetAll()
+        if (result.state == 1) {
+            result.data.forEach((e:any) => {
+                e.fileName = `${req.protocol}://${req.get('host')}/${e.fileName}`
+            });
+        }
         res.json(result);
     };
 

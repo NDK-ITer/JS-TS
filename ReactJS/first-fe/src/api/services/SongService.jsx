@@ -1,9 +1,11 @@
-import axios from 'axios';
+import Root from '../Root';
 
-const GetByUserId = () => {
-    return axios.get(`http://localhost:7000/v1/song/user/65c2ef30d70ae620536b2102`)
+const version = `v1`
+
+const GetAll = () => {
+    return Root.get(`${version}/song/all`)
 }
 
 export {
-    GetByUserId
+    GetAll
 }
