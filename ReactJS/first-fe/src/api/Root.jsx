@@ -20,8 +20,8 @@ instance.interceptors.request.use(function (config) {
 
 instance.interceptors.response.use(function (res) {
     let result = res.data
-    if(result.state !== 1){
-        console.log(result.mess)
+    if(result.state != 1){
+        alert(result.mess)
     }
     return result;
 }, function (error) {

@@ -4,7 +4,7 @@ import './assets/styles/App.scss';
 import Header from './components/Header';
 import TableSong from './components/TableSong';
 import HomePage from './components/Home'
-import Auth from './components/user/Auth'
+import Auth from './components/user/authenticate/Auth'
 
 function App() {
   return (

@@ -10,8 +10,16 @@ const Login = (props) => {
     })
 }
 
-const Register = () => {
-    return Root.get(`${version}/auth/register`)
+const Register = (props) => {
+    return Root.post(`${version}/auth/register`,{
+        firstName: props.firstName,
+        lastName: props.lastName,
+        specialName: props.specialName,
+        born: props.born,
+        email: props.email,
+        password: props.password,
+        avatar: props.avatar
+    })
 }
 
 const GetMyInformation = () => {
