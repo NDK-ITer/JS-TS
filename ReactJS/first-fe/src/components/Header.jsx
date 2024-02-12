@@ -2,8 +2,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {Link} from 'react-router-dom';
-import React from 'react';
-import Avatar from './user/Avatar';
+import React, { useEffect } from 'react';
+import '../assets/styles/Header.scss';
 import LogoApp from '../assets/images/MainLogo.png';
 import { Image } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
@@ -11,8 +11,13 @@ import { useLocation } from 'react-router-dom';
 const Header = () =>{
     const location = useLocation()
 
+    useEffect(() => {
+        
+    })
+
     return(
         <>
+        <div className="form-container">
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand as={Link} to='/'>
@@ -30,15 +35,14 @@ const Header = () =>{
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto" activeKey={location.pathname}>
                             <Nav.Link as={Link} to="/all-song">Song</Nav.Link>
-                            <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                            <Nav.Link as={Link} to="/register">Register</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
-                    {/* <Navbar as={Link} to = "/profile">
-                        <Avatar/>
-                    </Navbar> */}
+                    <Nav>
+                        <Nav.Link as={Link} to="/auth">User</Nav.Link>
+                    </Nav>
                 </Container>
             </Navbar>
+        </div>
         </>
     )
 }

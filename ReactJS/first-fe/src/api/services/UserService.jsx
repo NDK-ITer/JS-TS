@@ -1,4 +1,5 @@
 import Root from '../Root';
+import Cookies from 'js-cookie';
 
 const version = `v1`
 
@@ -18,7 +19,8 @@ const GetMyInformation = () => {
 }
 
 const Logout = () =>{
-    
+    Cookies.set('jwt','');
+    Cookies.set('user','')
 }
 
 export {

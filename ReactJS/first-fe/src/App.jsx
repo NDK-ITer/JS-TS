@@ -3,9 +3,8 @@ import {Routes, Route} from 'react-router-dom';
 import './assets/styles/App.scss';
 import Header from './components/Header';
 import TableSong from './components/TableSong';
-import LoginForm from './components/user/LoginForm';
 import HomePage from './components/Home'
-import RegisterForm from './components/user/Register';
+import Auth from './components/user/Auth'
 
 function App() {
   return (
@@ -14,8 +13,7 @@ function App() {
         <Container>
           <Routes>
             <Route path='/' element={<HomePage/>}/>
-            <Route path='/login' element={<LoginForm/>}/>
-            <Route path='/register' element={<RegisterForm/>}/>
+            <Route path='/auth' element={<Auth/>}/>
             <Route path='/all-song' element={<TableSong/>}/>
           </Routes>
         </Container>

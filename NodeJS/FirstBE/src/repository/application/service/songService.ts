@@ -168,8 +168,14 @@ export class SongService{
 
     public async Update(user: string, data: any): Promise<any>{
         try {
-            const song = await this.GetById(data.id);
-            if (song.user !== user) {
+            const song:any = await this.UOWRep.SongRepository.GetById(data.id)
+            if (song == null) {
+                return{
+                    state:0,
+                    mess:`not found song with id: ${data.id}`
+                }
+            }
+            if (song.user.id != user) {
                 return{
                     state: 0,
                     mess: 'you cant update'
