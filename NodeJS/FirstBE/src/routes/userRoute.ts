@@ -3,6 +3,7 @@ import UserController from "../controllers/userController";
 import { AuthMiddleware } from "../middlewares/authMiddleware";
 import { publicPath } from "../constants";
 import UOWService from "../repository/application/service/UOWService";
+import path from "path";
 
 const userRoute = require('express').Router();
 
@@ -15,7 +16,15 @@ const storage = multer.diskStorage({
     filename: async function (req: any, file, cb) {
         if (file) {
             const user = await UOWService.UserService.GetById(req.user.id)
-            req.body.avatarName = user.data.avatar;
+            let fileName = ``
+            if (user.data.avatar) {
+                fileName = user.data.avatar
+            }else{
+                const extension = path.extname(file.originalname);
+                const uniqueSuffix = `avatar-${Date.now() + '-' + Math.round(Math.random() * 1E9)}`;
+                fileName = uniqueSuffix + extension;
+            }
+            req.body.avatarName = fileName;
             cb(null,  req.body.avatarName);
         }
     }

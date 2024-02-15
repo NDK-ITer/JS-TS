@@ -18,7 +18,6 @@ const Register = (props) => {
         born: props.born,
         email: props.email,
         password: props.password,
-        avatar: props.avatar
     })
 }
 

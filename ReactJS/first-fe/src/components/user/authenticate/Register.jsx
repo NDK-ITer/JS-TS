@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
 import {Register} from '../../../api/services/UserService';
 import '../../../assets/styles/Register.scss';
+import 'react-image-crop/dist/ReactCrop.css';
 
 const RegisterForm = () => {
     const [registerData, setRegisterData] = useState({
@@ -15,9 +16,41 @@ const RegisterForm = () => {
         confirmPassword: '',
     });
 
+    // const getCroppedImg = (image, crop) => {
+    //     const canvas = document.createElement('canvas');
+    //     const scaleX = image.naturalWidth / image.width;
+    //     const scaleY = image.naturalHeight / image.height;
+    //     canvas.width = crop.width;
+    //     canvas.height = crop.height;
+    //     const ctx = canvas.getContext('2d');
+
+    //     ctx.drawImage(
+    //         image,
+    //         crop.x * scaleX,
+    //         crop.y * scaleY,
+    //         crop.width * scaleX,
+    //         crop.height * scaleY,
+    //         0,
+    //         0,
+    //         crop.width,
+    //         crop.height
+    //     );
+
+    //     return new Promise((resolve, reject) => {
+    //         canvas.toBlob((blob) => {
+    //             if (!blob) {
+    //                 console.error('Failed to create blob');
+    //                 reject(new Error('Canvas is empty'));
+    //                 return;
+    //             }
+    //             resolve(URL.createObjectURL(blob));
+    //         }, 'image/jpeg');
+    //     });
+    // };
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-            setRegisterData({
+        setRegisterData({
             ...registerData,
             [name]: value,
         });
@@ -32,7 +65,7 @@ const RegisterForm = () => {
             }
             const response = await Register(registerData)
             if (response.state === 1) {
-                console.log('Login is successful!')
+                alert('Join successful!')
                 Cookies.set('jwt', response.jwt);
                 Cookies.set('user', JSON.stringify(response.data));
                 console.log(Cookies.get('jwt'))
@@ -122,14 +155,18 @@ const RegisterForm = () => {
             />
         </Form.Group>
 
-        <Form.Group controlId="formBasicImage">
-            <Form.Label>Ảnh đại diện:</Form.Label>
+        {/* <Form.Group controlId="formBasicImage">
+            <Form.Label>Avatar:</Form.Label>
             <Form.Control
                 type="file"
                 name="avatar"
+                accept="image/*"
                 onChange={handleInputChange}
             />
-        </Form.Group>
+            {registerData.avatarURL && (
+                <img src={registerData.avatarURL} alt="avatar" style={{ maxWidth: '100%', marginTop: '10px' }} />
+            )}
+        </Form.Group> */}
 
         <Form.Group>
             <Button variant="primary" type="submit" className='btn-submit'>

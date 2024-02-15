@@ -20,8 +20,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
-authRoute.post('/register', upload.single('avatar'), AuthController.Register);
+authRoute.post('/register', upload.single(''), AuthController.Register);
 authRoute.post('/login',upload.single(''), AuthController.Login);
 
 export default authRoute;

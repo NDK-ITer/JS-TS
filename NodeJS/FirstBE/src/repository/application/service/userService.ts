@@ -15,6 +15,7 @@ export class UserService{
     public async Create(data: any): Promise<any>{
         try {
             let state: number = 0;
+            const born = new Date(data.born)
             const userAvailable = await this.UOWRep.UserRepository.Find(u => u.email == data.email);
             if (userAvailable.length != 0) {
                 return{
@@ -30,7 +31,7 @@ export class UserService{
                 email: data.email,
                 specialName: data.specialName,
                 passwordHash: passwordHash,
-                born: data.born.toLocaleDateString(),
+                born: born,
                 role:'USER'
             }
             const user:any = await this.UOWRep.UserRepository.Add(newUser);
@@ -38,20 +39,13 @@ export class UserService{
                 state = 0
             }
             state = 1;
-            return{
-                state: state,
-                data: {
-                    id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    avatar: user.avatar,
-                    specialName: user.specialName,
-                    born: user.born.toLocaleDateString(),
-                    passwordHash: user.passwordHash
-                }
-            }
+            const result = await this.GetJWT({
+                email: user.email,
+                password: data.password
+            })
+            return result
         } catch (error) {
+            console.log(error)
             return {
                 state: -1,
                 mess: error
