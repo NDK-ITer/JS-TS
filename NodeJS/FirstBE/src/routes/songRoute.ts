@@ -39,6 +39,7 @@ const uploadUPdate = multer({ storage: storageUpdate });
 
 songRoute.get('/all', AuthMiddleware.AuthenticateJWT, AuthMiddleware.IsAdmin, SongController.GetAll);
 // songRoute.get('/all', SongController.GetAll);
+songRoute.get('/my-song', AuthMiddleware.AuthenticateJWT, SongController.GetByMe);
 songRoute.get('/:id', SongController.GetById);
 songRoute.get('/user/:id', SongController.GetByUserId);
 

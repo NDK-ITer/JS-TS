@@ -4,8 +4,11 @@ import Cookies from 'js-cookie';
 import {Register} from '../../../api/services/UserService';
 import '../../../assets/styles/Register.scss';
 import 'react-image-crop/dist/ReactCrop.css';
+import { ToastContainer, toast } from "react-toastify";
+
 
 const RegisterForm = () => {
+    const [loadingAPI, setLoadingAPI] = useState(false)
     const [registerData, setRegisterData] = useState({
         firstName: '',
         lastName: '',
@@ -60,17 +63,19 @@ const RegisterForm = () => {
         event.preventDefault();
         try {
             if (registerData.confirmPassword !== registerData.password) {
-                alert('Password is not confirm!')
+                toast.error('Password is not confirm!')
                 return
             }
+            setLoadingAPI(true)
             const response = await Register(registerData)
             if (response.state === 1) {
-                alert('Join successful!')
+                toast.success('Join successful!')
                 Cookies.set('jwt', response.jwt);
                 Cookies.set('user', JSON.stringify(response.data));
                 console.log(Cookies.get('jwt'))
                 // navigate('/all-song')
             }
+            setLoadingAPI(false)
         } catch (error) {
             console.error('Register error:', error);
         }
@@ -170,8 +175,9 @@ const RegisterForm = () => {
 
         <Form.Group>
             <Button variant="primary" type="submit" className='btn-submit'>
-                Sign up
+                {loadingAPI && (<i class="fa-solid fa-sync fa-spin"></i>)}Sign up
             </Button>
+            <ToastContainer />
         </Form.Group>
         </Form>
     );

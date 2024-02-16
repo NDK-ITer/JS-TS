@@ -7,6 +7,8 @@ import '../assets/styles/Header.scss';
 import LogoApp from '../assets/images/MainLogo.png';
 import { Image } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import UserHeader from './user/UserHeader';
+
 
 const Header = () =>{
     const location = useLocation()
@@ -26,19 +28,19 @@ const Header = () =>{
                                 borderSpacing: "50%", 
                                 height: "50px", 
                                 width: "50px" 
-                                }
-                            } 
+                            }} 
                         />
                         <span> Sing Together</span>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto" activeKey={location.pathname}>
-                            <Nav.Link as={Link} to="/all-song">Song</Nav.Link>
+                            <Nav.Link as={Link} to="/my-song">Song</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                     <Nav>
-                        <Nav.Link as={Link} to="/auth">User</Nav.Link>
+                        {/* <Nav.Link as={Link} to="/auth">User</Nav.Link> */}
+                        <UserHeader/>
                     </Nav>
                 </Container>
             </Navbar>

@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
 import { Login } from '../../../api/services/UserService';
 import '../../../assets/styles/LoginForm.scss';
 import { ToastContainer, toast } from "react-toastify";
+import {useNavigate} from 'react-router-dom';
+import { UserContext } from '../../../contexts/UserContext';
+
 const LoginForm = (props) => {
 
+    let navigate = useNavigate()
+    const {loginContext} = useContext(UserContext)
     const [loadingAPI, setLoadingAPI] = useState(false)
     const [isShowPassword, setIsShowPassword] = useState(false)
     const [loginData, setLoginData] = useState({
@@ -36,14 +41,22 @@ const LoginForm = (props) => {
             const response = await Login(loginData)
             if (response.state === 1) {
                 toast.success(`Login is successful!`);
-                Cookies.set('jwt', response.jwt);
-                Cookies.set('user', JSON.stringify(response.data));
+                loginContext(response)
+                navigate('/')
             }
             setLoadingAPI(false)
         } catch (error) {
-            console.error('Login error:', error);
+            toast.error('Login error');
+            setLoadingAPI(false)
         }
     };
+
+    useEffect(() => {
+        const jwt  = Cookies.get('jwt');
+        if (jwt) {
+            navigate('/')
+        }
+    },[])
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -75,9 +88,10 @@ const LoginForm = (props) => {
 
             <Form.Group>
                 <Button variant="primary" type="submit" className='btn-submit' 
-                    disabled={loginData.email && loginData.password ? false:true}
+                    disabled={(loginData.email && loginData.password) || loadingAPI ? false:true}
                 >
-                    {loadingAPI && (<i class="fa-solid fa-sync fa-spin"></i>)}Login
+                    {loadingAPI && (<i className="fa-solid fa-sync fa-spin"></i>)}
+                    &nbsp;Login
                 </Button>
                 <ToastContainer />
             </Form.Group>

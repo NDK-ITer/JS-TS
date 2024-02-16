@@ -85,6 +85,7 @@ export class SongService{
                     id: song.id,
                     publishedDate: song.publishedDate,
                     name: song?.name,
+                    fileName: song.fileName,
                     user: {
                         id: song?.user._id,
                         name: song.user.firstName+' ' + song.user.lastName

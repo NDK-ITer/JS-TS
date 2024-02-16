@@ -10,23 +10,15 @@ function AuthForm() {
         setIsLoginForm(!isLoginForm);
     };
 
-    const handleLoginSubmit = (data) => {
-        console.log('Đăng nhập:', data);
-    };
-
-    const handleRegisterSubmit = (data) => {
-        console.log('Đăng ký:', data);
-    };
-
     return (
         <Container>
         <Row className="justify-content-md-center">
             <Col xs={12} md={6}>
             <h1 className="text-center">{isLoginForm ? 'Log in' : 'New Member'}</h1>
             {isLoginForm ? (
-                <LoginForm onSubmit={handleLoginSubmit} />
+                <LoginForm/>
             ) : (
-                <RegisterForm onSubmit={handleRegisterSubmit} />
+                <RegisterForm/>
             )}
             <p className="text-center mt-3">
                 {isLoginForm ? 'Not available account?' : 'available account?'}

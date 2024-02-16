@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { toast } from "react-toastify";
 
 const instance = axios.create({
     baseURL: `http://localhost:7000/`,
@@ -21,7 +22,7 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (res) {
     let result = res.data
     if(result.state != 1){
-        alert(result.mess)
+        toast.error(result.mess)
     }
     return result;
 }, function (error) {
@@ -30,13 +31,10 @@ instance.interceptors.response.use(function (res) {
         res.data = error.response.data
         res.status = error.response.status
         res.headers = error.response.headers
-        console.log(res)
-    }
-    else if(error.request){
-        console.log(error.request)
+        toast.error('error');
     }
     else{
-        console.log(error.mess)
+        toast.log(error.mess)
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

@@ -1,15 +1,24 @@
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { GetAll } from '../api/services/SongService';
+import { ToastContainer, toast } from "react-toastify";
+import { 
+    GetAll,
+    GetMySong 
+} from '../api/services/SongService';
 
 const TableUser = (props) =>{
     const[listSong, setListSong] = useState([])
 
     const getSongWithUser = async() =>{
-        let res = await GetAll();
-        if (res && res.data) {
-            setListSong(res.data)
+        try {
+            let res = await GetMySong();
+            if (res && res.data) {
+                setListSong(res.data)
+            }
+        } catch (error) {
+            toast.error(error)
         }
+        
     }
 
     useEffect(()=>{
@@ -17,7 +26,6 @@ const TableUser = (props) =>{
     },[])
 
     return(
-        <>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -46,8 +54,8 @@ const TableUser = (props) =>{
                     }
                     
                 </tbody>
+                <ToastContainer/>
             </Table>
-        </>
     )
 }
 export default TableUser;
