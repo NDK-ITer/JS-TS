@@ -22,7 +22,7 @@ function AuthForm() {
         <Container>
         <Row className="justify-content-md-center">
             <Col xs={12} md={6}>
-            <h1 className="text-center">{isLoginForm ? 'Login' : 'New Member'}</h1>
+            <h1 className="text-center">{isLoginForm ? 'Log in' : 'New Member'}</h1>
             {isLoginForm ? (
                 <LoginForm onSubmit={handleLoginSubmit} />
             ) : (

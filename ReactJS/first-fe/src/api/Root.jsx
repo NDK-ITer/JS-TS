@@ -25,9 +25,23 @@ instance.interceptors.response.use(function (res) {
     }
     return result;
 }, function (error) {
+    let res = {}
+    if (error.response) {
+        res.data = error.response.data
+        res.status = error.response.status
+        res.headers = error.response.headers
+        console.log(res)
+    }
+    else if(error.request){
+        console.log(error.request)
+    }
+    else{
+        console.log(error.mess)
+    }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    return Promise.reject(error);
+    console.log(res)
+    return res;
 });
 
 export default instance;
