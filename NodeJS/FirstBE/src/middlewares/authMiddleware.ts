@@ -11,14 +11,14 @@ export class AuthMiddleware{
         if (!token) {
             return res.json({ 
                 state: 0,
-                mess: 'Unauthorized - No token provided' 
+                mess: 'Login please!' 
             });
         }
         const decodedUser = await Authenticate.VerifyAndDecodeJWT(token, secretKey);
         if (!decodedUser) {
             return res.json({ 
                 state: 0,
-                mess: 'Forbidden - Invalid token' 
+                mess: 'Please login again' 
             });
         }
         req.user = decodedUser
@@ -30,7 +30,7 @@ export class AuthMiddleware{
         if (user.role != 'USER') {
             return res.json({ 
                 state: 0,
-                mess: 'Forbidden - Invalid token' 
+                mess: 'Access is not allowed' 
             });
         }
         next()
@@ -41,7 +41,7 @@ export class AuthMiddleware{
         if (user.role != 'ADMIN') {
             return res.json({ 
                 state: 1,
-                mess: 'Forbidden - Invalid token' 
+                mess: 'Access is not allowed' 
             });
         }
         next()

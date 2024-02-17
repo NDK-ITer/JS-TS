@@ -36,8 +36,6 @@ const UserContext = createContext({
 
 const UserProvider = ({ children }) =>{
 
-    
-
     const [user, setUser] = useState({
         name: GetUserName(),
         avatar:GetUserAvatar(),

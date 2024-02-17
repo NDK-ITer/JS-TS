@@ -20,6 +20,7 @@ class UserController{
         if (result.state == 1) {
             result.data.linkAvatar = `${req.protocol}://${req.get('host')}/${result.data.avatar}`
         }
+        res.json(result)
     }
 }
 

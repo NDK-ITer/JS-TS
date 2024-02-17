@@ -1,10 +1,10 @@
-.avatar{
-    cursor: pointer;
-    font-size: 30px;
-}
 
 .name-user{
     cursor: pointer;
     color: black;
     size: 0;
+}
+
+.nav-item .nav-link.dropdown-toggle::after {
+    display: none !important;
 }

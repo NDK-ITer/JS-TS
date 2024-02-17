@@ -35,11 +35,10 @@ const Header = () =>{
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto" activeKey={location.pathname}>
-                            <Nav.Link as={Link} to="/my-song">Song</Nav.Link>
+                            {/* <Nav.Link as={Link} to="/my-song">Song</Nav.Link> */}
                         </Nav>
                     </Navbar.Collapse>
                     <Nav>
-                        {/* <Nav.Link as={Link} to="/auth">User</Nav.Link> */}
                         <UserHeader/>
                     </Nav>
                 </Container>

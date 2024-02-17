@@ -204,6 +204,7 @@ export class UserService{
             if (!user) {
                 state = 0;
             }
+            
             state = 1;
             let songModel: any[] = [];
             if (user.songs != null) {
@@ -215,7 +216,6 @@ export class UserService{
                     });
                 });
             }
-            
             return{
                 state: state,
                 data:{

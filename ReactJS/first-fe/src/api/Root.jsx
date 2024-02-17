@@ -26,20 +26,20 @@ instance.interceptors.response.use(function (res) {
     }
     return result;
 }, function (error) {
-    let res = {}
-    if (error.response) {
-        res.data = error.response.data
-        res.status = error.response.status
-        res.headers = error.response.headers
-        toast.error('error');
-    }
-    else{
-        toast.log(error.mess)
-    }
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    console.log(res)
-    return res;
+    // let res = {}
+    // if (error.response) {
+    //     res.data = error.response.data
+    //     res.status = error.response.status
+    //     res.headers = error.response.headers
+    //     toast.error('error');
+    // }
+    // else{
+    //     toast.log(error.mess)
+    // }
+    // // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // // Do something with response error
+    // // console.log(res)
+    // return res;
 });
 
 export default instance;

@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Table from 'react-bootstrap/Table';
 import { ToastContainer, toast } from "react-toastify";
+import { UserContext } from '../../contexts/UserContext';
+import {useNavigate} from 'react-router-dom';
 import { 
-    GetAll,
     GetMySong 
-} from '../api/services/SongService';
+} from '../../api/services/SongService';
 
-const TableUser = (props) =>{
+const MySong = (props) =>{
+
+    let navigate = useNavigate()
+    const { user } = useContext(UserContext)
     const[listSong, setListSong] = useState([])
-
     const getSongWithUser = async() =>{
         try {
             let res = await GetMySong();
@@ -18,10 +21,12 @@ const TableUser = (props) =>{
         } catch (error) {
             toast.error(error)
         }
-        
     }
 
     useEffect(()=>{
+        if (!user.isAuth) {
+            navigate('/auth')
+        }
         getSongWithUser()
     },[])
 
@@ -58,4 +63,4 @@ const TableUser = (props) =>{
             </Table>
     )
 }
-export default TableUser;
+export default MySong;

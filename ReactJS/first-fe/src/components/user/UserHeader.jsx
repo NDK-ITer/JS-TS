@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Image, NavDropdown, Nav } from 'react-bootstrap';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import '../../assets/styles/UserHeader.scss'
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 
-const Avatar = (props) => {
+const UserHeader = (props) => {
     const { logout, user } = useContext(UserContext)
-    const navigate = useNavigate()
 
     const handleLogout = () => {
         logout()
-        navigate('/')
     }
 
     useEffect(() => {
@@ -30,24 +28,35 @@ const Avatar = (props) => {
                                         borderRadius: "5%", 
                                         height: "50px", 
                                         width: "50px" 
-                                        }
-                                    } 
+                                    }} 
                                 />
                                 &nbsp;{user.name}
                             </div>
                         }
                     >
-                        <NavDropdown.Item><Nav.Link as={Link} to="/profile">Profile</Nav.Link></NavDropdown.Item>
+                        <NavDropdown.Item><Nav.Link as={Link} to="/profile"><i class="fa-solid fa-address-card"></i>&nbsp;Profile</Nav.Link></NavDropdown.Item>
+                        <NavDropdown.Item><Nav.Link as={Link} to="/my-song"><i class="fa-solid fa-music"></i>&nbsp;Song</Nav.Link></NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item><Nav.Link as={Link} onClick={handleLogout}>Log Out</Nav.Link></NavDropdown.Item>
+                        <div style={{
+                            background: 'yellow',
+                            color: 'white'
+                        }}>
+                            <NavDropdown.Item><Nav.Link as={Link} onClick={handleLogout}><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Log Out</Nav.Link></NavDropdown.Item>
+                        </div>
                     </NavDropdown>
                 </Nav>
                 
             :
-                <div>
+                <div 
+                    roundedCircle={true}
+                    style={{
+                        background: 'grey',
+                        borderRadius: "15%", 
+                    }}
+                >
                     <Nav.Link as={Link} to="/auth">
                         <div>
-                            <i class="fa-solid fa-user avatar"></i>
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;<i class="fa-solid fa-user avatar"></i>
                         </div>
                     </Nav.Link>
                 </div>
@@ -57,4 +66,4 @@ const Avatar = (props) => {
     </>)
 }
 
-export default Avatar
+export default UserHeader
