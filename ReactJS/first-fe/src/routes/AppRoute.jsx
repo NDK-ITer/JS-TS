@@ -2,7 +2,7 @@ import {Routes, Route} from 'react-router-dom';
 import HomePage from '../components/Home'
 import Auth from '../components/user/authenticate/Auth'
 import AuthRoute from './AuthRoute';
-import Profile from '../components/user/Profile';
+import Profile from '../components/user/information/MainInformation';
 import MySong from '../components/sounds/MySong';
 
 const AppRoute = () => {

@@ -8,6 +8,8 @@ import LogoApp from '../assets/images/MainLogo.png';
 import { Image } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import UserHeader from './user/UserHeader';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 
 const Header = () =>{
@@ -37,6 +39,19 @@ const Header = () =>{
                         <Nav className="me-auto" activeKey={location.pathname}>
                             {/* <Nav.Link as={Link} to="/my-song">Song</Nav.Link> */}
                         </Nav>
+                        <div className='search-box'>
+                            <Form className="d-flex">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-success">
+                                    <i class="fa-solid fa-magnifying-glass"></i>    
+                                </Button>
+                            </Form>
+                        </div>
                     </Navbar.Collapse>
                     <Nav>
                         <UserHeader/>

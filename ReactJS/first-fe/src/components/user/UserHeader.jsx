@@ -28,7 +28,8 @@ const UserHeader = (props) => {
                                         borderRadius: "5%", 
                                         height: "50px", 
                                         width: "50px" 
-                                    }} 
+                                    }}
+                                    
                                 />
                                 &nbsp;{user.name}
                             </div>
@@ -49,14 +50,11 @@ const UserHeader = (props) => {
             :
                 <div 
                     roundedCircle={true}
-                    style={{
-                        background: 'grey',
-                        borderRadius: "15%", 
-                    }}
+                    className='login-btn'
                 >
                     <Nav.Link as={Link} to="/auth">
                         <div>
-                        <i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;<i class="fa-solid fa-user avatar"></i>
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i>
                         </div>
                     </Nav.Link>
                 </div>

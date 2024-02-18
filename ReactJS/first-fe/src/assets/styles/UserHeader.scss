@@ -8,3 +8,19 @@
 .nav-item .nav-link.dropdown-toggle::after {
     display: none !important;
 }
+
+.login-btn{
+    background: rgb(224, 220, 220);
+    height: 42px;
+    width: 74px;
+    margin: auto;
+    border-radius: 50%;
+    i{
+        background: none;
+        margin-bottom: 0 auto;
+        position: relative;
+        padding: auto;
+        top: 1px;
+        right: -17px;
+    }
+}
