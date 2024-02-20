@@ -13,9 +13,9 @@ const storage = multer.diskStorage({
     },
     filename: function (req: any, file, cb) {
         const extension = path.extname(file.originalname);
-        const uniqueSuffix = `sound-${Date.now() + '-' + Math.round(Math.random() * 1E9)}`;
+        const uniqueSuffix = `${file.fieldname}-${Date.now() + '-' + Math.round(Math.random() * 1E9)}`;
         const fileName = uniqueSuffix + extension;
-        req.body.fileName = fileName;
+        req.body[file.fieldname] = fileName;
         cb(null, fileName);
     }
 });  
@@ -43,7 +43,10 @@ songRoute.get('/my-song', AuthMiddleware.AuthenticateJWT, SongController.GetByMe
 songRoute.get('/:id', SongController.GetById);
 songRoute.get('/user/:id', SongController.GetByUserId);
 
-songRoute.post('/add', AuthMiddleware.AuthenticateJWT, upload.single('file'), SongController.Create);
+songRoute.post('/add', AuthMiddleware.AuthenticateJWT, upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'sound', maxCount: 1 }
+]), SongController.Create);
 
 songRoute.put('/update', AuthMiddleware.AuthenticateJWT, uploadUPdate.single('file'), SongController.Update);
 

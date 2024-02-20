@@ -19,9 +19,17 @@ class UserController{
         const result = await UOWService.UserService.GetInformation(req.user.id);
         if (result.state == 1) {
             result.data.linkAvatar = `${req.protocol}://${req.get('host')}/${result.data.avatar}`
+            result.data.listSong.forEach((e:any) => {
+                e.image = `${req.protocol}://${req.get('host')}/${e.image}`
+            });
         }
         res.json(result)
     }
 }
 
 export default UserController;
+
+// result.data.forEach((e:any) => {
+//     e.fileName = `${req.protocol}://${req.get('host')}/${e.fileName}`
+//     e.image = `${req.protocol}://${req.get('host')}/${e.image}`
+// });

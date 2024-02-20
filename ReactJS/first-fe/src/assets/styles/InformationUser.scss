@@ -1,6 +1,5 @@
 .container-avatar {
     position: relative;
-    background-color: rgb(102, 255, 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,20 +30,86 @@
     transform: translate(-50%, -50%); /* Đưa nút về giữa */
     z-index: 2; /* Sử dụng z-index cao hơn để nút đè lên hình ảnh */
     border-radius: 50%; 
-    background-color: rgba(197, 197, 197, 0.5);
+    background-color: rgba(197, 197, 197, 0.75);
     display: flex;
     justify-content: center;
     align-items: center;
 }  
 
 .prf-bg{
-    background-color: blue;
+    background-color: none;
 }
 
-.song-bg{
-    background-color: green;
-}
+
 
 .edit-avatar-btn:hover{
     background-color: grey 0.5;
+}
+
+.name-perform{
+    position: absolute;
+    margin: auto;
+    display: flex;
+    width: 33%;
+    justify-content: center;
+    align-items: center;
+    
+    p{
+        font-size: 28px;
+        display: block;
+    }
+}
+
+.center-content {
+
+}
+
+
+//profile
+
+//song
+
+.song-bg{
+    position: relative;
+    background-color: none;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+}
+
+.card{
+    cursor: pointer;
+}
+
+.card img{
+    width: 286px;
+    height: 207px;
+}
+
+.card-element{
+    position: relative;
+    width: 33%;
+    height: auto;
+    border-radius: 10px;
+    flex: 0 0 33.33%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img.card-img-top{
+        position: relative;
+    }
+}
+
+.card-body{
+    background-color: rgb(223, 221, 221);
+}
+
+div.card-title.h5{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

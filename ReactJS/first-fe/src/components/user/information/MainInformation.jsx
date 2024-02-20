@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import Image from 'react-bootstrap/Image';
 import Tab from 'react-bootstrap/Tab';
@@ -9,11 +9,12 @@ import {
     GetMyInformation
 } from '../../../api/services/UserService';
 import Profile from './profile/Profile';
-import Song from './song/Song';
+import {UserContext} from '../../../contexts/UserContext'
+import Song from './song/Song'
 
 const MainInformation = (props) => {
 
-    const [isClicked, setIsClicked] = useState(false);
+    const {user} = useContext(UserContext)
     const [isHovered, setIsHovered] = useState(false);
     const [userInformation, setUserInformation] = useState()
 
@@ -28,10 +29,6 @@ const MainInformation = (props) => {
         }
     }
 
-    const handleClick = () => {
-        setIsClicked(!isClicked); // Đảo ngược trạng thái khi click
-    };
-
     useEffect(() => {
         getInformation()
     }, [])
@@ -40,7 +37,10 @@ const MainInformation = (props) => {
         <div>
             {userInformation && (
                 <div>
-                    <div className='container-avatar'>
+                    <div className='container-avatar'
+                        title={<Image src={userInformation.linkAvatar}
+                        />}
+                    >
                         <Col xs={6} md={4}>
                             <div
                                 onMouseEnter={() => setIsHovered(true)}
@@ -49,27 +49,33 @@ const MainInformation = (props) => {
                                 <Image src={userInformation.linkAvatar}
                                     roundedCircle
                                 />
+                                <div  className='name-perform'>
+                                    <p>{user.name}</p>
+                                </div>
                                 {isHovered && (
-                                    <div className='edit-avatar-btn'>
+                                    <span className='edit-avatar-btn'>
                                         <i class="fa-solid fa-pen-to-square"></i>
-                                    </div>
+                                    </span>
                                 )}
                             </div>
                         </Col>
                     </div>
                     <div className='tab-category'>
-                        <Tabs
-                            defaultActiveKey="profile"
-                            id="uncontrolled-tab-example"
-                            className="mb-3"
-                        >
-                            <Tab eventKey="profile" title="Profile">
-                                <Profile />
-                            </Tab>
-                            <Tab eventKey="song" title="Song">
-                                <Song />
-                            </Tab>
-                        </Tabs>
+                        <div className='center-content'>
+                            <Tabs
+                                defaultActiveKey="profile"
+                                id="uncontrolled-tab-example"
+                                className="mb-3"
+                                fill
+                            >
+                                <Tab eventKey="profile" title="Profile">
+                                    <Profile data={userInformation} />
+                                </Tab>
+                                <Tab eventKey="song" title="Song">
+                                    <Song data={userInformation.listSong} />
+                                </Tab>
+                            </Tabs>
+                        </div>
                     </div>
                 </div>
             )}

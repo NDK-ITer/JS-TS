@@ -8,7 +8,7 @@ export class SongService{
 
     public async Create(user: string, data: any): Promise<any>{
         try {
-            if (!data.fileName) {
+            if (!data.sound) {
                 return{
                     state: 0,
                     mess: `sound not empty`
@@ -16,7 +16,8 @@ export class SongService{
             }
             const newSong: any = {
                 name: data.name,
-                fileName: data.fileName,
+                fileName: data.sound,
+                image: data.image,
                 publishedDate: new Date().toLocaleDateString(),
             }
             const song = await this.UOWRep.SongRepository.Add(newSong);
@@ -49,6 +50,7 @@ export class SongService{
                         id: songModel._id,
                         publishedDate: song?.publishedDate,
                         name: songModel.name,
+                        image: songModel.image,
                         fileName: song?.fileName,
                         user: {
                             id: songModel.user._id,
@@ -85,6 +87,7 @@ export class SongService{
                     id: song.id,
                     publishedDate: song.publishedDate,
                     name: song?.name,
+                    image: song.image,
                     fileName: song.fileName,
                     user: {
                         id: song?.user._id,
@@ -109,6 +112,7 @@ export class SongService{
                 publishedDate: e.publishedDate,
                 fileName: e.fileName,
                 name: e.name,
+                image: e.image,
                 user: {
                     id: e.user._id,
                     name: e.user.firstName+' ' + e.user.lastName
@@ -212,6 +216,7 @@ export class SongService{
                 songModel.push({
                     id: e._id,
                     name: e.name,
+                    image: e.image,
                     fileName: e.fileName,
                     publishedDate: e.publishedDate
                 });

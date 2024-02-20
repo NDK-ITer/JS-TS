@@ -23,6 +23,7 @@ class SongController {
         const result = await UOWService.SongService.GetById(req.params.id)
         if (result.state == 1) {
             result.data.fileName = `${req.protocol}://${req.get('host')}/${result.data.fileName}`
+            result.data.image = `${req.protocol}://${req.get('host')}/${result.data.image}`
         }
         res.json(result);
     };
@@ -32,6 +33,7 @@ class SongController {
         if (result.state == 1) {
             result.data.forEach((e:any) => {
                 e.fileName = `${req.protocol}://${req.get('host')}/${e.fileName}`
+                e.image = `${req.protocol}://${req.get('host')}/${e.image}`
             });
         }
         res.json(result);
@@ -55,6 +57,7 @@ class SongController {
         if (result.state == 1) {
             result.data.forEach((e:any) => {
                 e.fileName = `${req.protocol}://${req.get('host')}/${e.fileName}`
+                e.image = `${req.protocol}://${req.get('host')}/${e.image}`
             });
         }
         res.json(result);

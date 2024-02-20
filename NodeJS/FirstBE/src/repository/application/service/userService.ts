@@ -213,6 +213,7 @@ export class UserService{
                         id: e._id,
                         publishedDate: e.publishedDate,
                         name: e.name,
+                        image:e.image
                     });
                 });
             }
@@ -222,6 +223,7 @@ export class UserService{
                     id: user._id,
                     FirstName: user.firstName,
                     LastName: user.lastName,
+                    Born: user.born,
                     avatar: user.avatar,
                     role: user.role,
                     listSong: songModel

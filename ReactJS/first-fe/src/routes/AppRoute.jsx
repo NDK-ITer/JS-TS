@@ -2,7 +2,7 @@ import {Routes, Route} from 'react-router-dom';
 import HomePage from '../components/Home'
 import Auth from '../components/user/authenticate/Auth'
 import AuthRoute from './AuthRoute';
-import Profile from '../components/user/information/MainInformation';
+import MainInformation from '../components/user/information/MainInformation';
 import MySong from '../components/sounds/MySong';
 
 const AppRoute = () => {
@@ -15,9 +15,9 @@ const AppRoute = () => {
                     <MySong/>
                 </AuthRoute>
             }/>
-            <Route path='/profile' element={
+            <Route path='/main-information' element={
                 <AuthRoute>
-                    <Profile/>
+                    <MainInformation/>
                 </AuthRoute>
             }/>
         </Routes>

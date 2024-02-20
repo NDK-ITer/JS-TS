@@ -35,7 +35,7 @@ const UserHeader = (props) => {
                             </div>
                         }
                     >
-                        <NavDropdown.Item><Nav.Link as={Link} to="/profile"><i class="fa-solid fa-address-card"></i>&nbsp;Profile</Nav.Link></NavDropdown.Item>
+                        <NavDropdown.Item><Nav.Link as={Link} to="/main-information"><i class="fa-solid fa-address-card"></i>&nbsp;Profile</Nav.Link></NavDropdown.Item>
                         <NavDropdown.Item><Nav.Link as={Link} to="/my-song"><i class="fa-solid fa-music"></i>&nbsp;Song</Nav.Link></NavDropdown.Item>
                         <NavDropdown.Divider />
                         <div style={{

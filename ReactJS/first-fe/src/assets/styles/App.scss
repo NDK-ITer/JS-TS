@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 code {
@@ -12,4 +15,14 @@ code {
     monospace;
 }
 
+.footer {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  margin-top: auto;
+}
 
+.app{
+  flex: 1;
+}

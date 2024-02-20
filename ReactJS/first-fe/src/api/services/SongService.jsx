@@ -11,7 +11,12 @@ const GetMySong = () =>{
     return Root.get(`${version}/${obj}/my-song`)
 }
 
+const GetById = (idSong) =>{
+    return Root.get(`${version}/${obj}/${idSong}`)
+}
+
 export {
     GetAll,
+    GetById,
     GetMySong
 }
